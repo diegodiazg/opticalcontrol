@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %} Inicio {% endblock %}
+
+
+
+{% block encabezado %}
+	<h1>Optica Lupita</h1>
+{% endblock%}
+
+{% block contenido %}
+	<p>
+	Actualmente tenemos en existencia:
+	{% with total=productos.count %}
+		{{total}} producto{{total|pluralize}}
+	{% endwith %}
+</p>
+
+	<ul>
+		{% for dato in productos %}
+		<li class="{% cycle 'imar' 'par' %}">{{dato.nombre_producto}}</li>
+		{% empty %}
+		<li>No hay productos</li>
+		{% endfor %}
+	</ul>
+	<a href='/productos/nuevo'>Agregar nuevo producto</a>
+{% endblock%}

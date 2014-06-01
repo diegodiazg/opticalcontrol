@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %} Productos {% endblock %}
+
+
+{% block encabezado %}
+	<h1>Productos de la tienda</h1>
+{% endblock%}
+
+{% block contenido %}
+	<p>
+	Actualmente hay:
+	{% with total=productos.count %}
+		{{total}} productos{{total|pluralize}}
+	{% endwith %}
+</p>
+
+	<ul>
+		{% for dato in productos %}
+		<li class="{% cycle 'imar' 'par' %}">{{dato.nombre_producto}}<span>{{dato.precio_unidad_producto}}</span></li>
+
+		{% empty %}
+		<li>No existen clientes</li>
+		{% endfor %}
+	</ul>
+	<a href='/productos/nuevo'>Agregar un nuevo producto</a>
+{% endblock%}

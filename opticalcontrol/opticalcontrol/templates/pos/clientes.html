@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %} Clientes {% endblock %}
+
+
+{% block encabezado %}
+	<h1>Clientes de la tienda</h1>
+{% endblock%}
+
+{% block contenido %}
+	<p>
+	Actualmente hay:
+	{% with total=cliente.count %}
+		{{total}} cliente{{total|pluralize}}
+	{% endwith %}
+</p>
+
+	<ul>
+		{% for dato in cliente %}
+		<li class="{% cycle 'imar' 'par' %}">{{dato.nombre_cliente}}<span>{{dato.apellido_cliente}}</span></li>
+
+		{% empty %}
+		<li>No existen clientes</li>
+		{% endfor %}
+	</ul>
+	<a href='/cliente/nuevo'>Agregar un nuevo cliente</a>
+{% endblock%}

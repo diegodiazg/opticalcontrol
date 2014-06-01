@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block contenido %}
+	<form class='seccion' id='formulario' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+		<fieldset>
+		<legend>Agregar nuevo producto</legend>
+		{{formulario.as_p}}
+		<p><input type='submit' value='Guardar' class='btnAzul' /></p>
+	</fieldset>
+	</form> 
+{% endblock %}

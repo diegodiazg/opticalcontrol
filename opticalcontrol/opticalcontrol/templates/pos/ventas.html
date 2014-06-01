@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block titulo %} VENTA {% endblock %}
+
+{% block encabezado %}
+	<h1>REALIZAR VENTA</h1>
+{% endblock%}
+
+{% block contenido %}
+	<form id='formulario' method ='post' action=''>{% csrf_token %}
+		<fieldset>
+			<legend>Registro factura</legend>
+				{{factura.as_p}}
+				<fieldset id='detalle_fac'>
+					<legend>Registro detalle</legend>
+					{{detallefactura.as_p}}</br>
+					
+					<input type='button' name='agregar' value='agregar' id='fila' ></br></br>
+				</fieldset >
+			<p><input type='submit' value='Confirmar' /></p>
+		</fieldset>
+	</form>
+
+	<aside id='alerta'>
+		{{alerta}}
+	</aside>
+
+	<aside id='detalle_producto'>
+	
+	</aside>
+
+
+
+
+
+{% endblock %}
+
+
+{% block js %}
+
+		<script type="text/javascript">
+
+		
+			$('#id_nit').on('keyup', cliente); // cuando se teclea en el campo id, llama a la fucion 
+			$('#id_cantidad').on('keyup', total);
+
+			$('#id_producto').on('change', precio);
+			$('#id_producto').on('change', precio);
+			$('#id_producto').on('change', precio);
+
+
+			//$('#fila').on('click', fila);
+
+			function cliente(){
+				var nombre;
+				var apellido;
+				var direccion;
+				var id;
+				
+	    		var valor = $('#id_nit').val();
+
+	    		$.ajax({
+
+	    			data: {'valor':valor},
+	    			url: '/busqueda_cliente',
+	    			type:'get',
+	    			success: function(data){
+	    				nombre=''
+	    				apellido=''
+	    				direccion=''
+	    				id=''
+	    				for (var i=0; i<data.length; i++){
+
+	    					//palabra+=data[i].fields.nombre_cliente;
+	    					//console.log(data[0].fields.nombre_cliente)
+	    				
+	    					nombre+=data[i].fields.nombre_cliente;
+	    					apellido+=data[i].fields.apellido_cliente;
+	    					direccion+=data[i].fields.direccion_cliente;
+	    					id+=data[i].fields.pk;
+
+	    					//console.log(data[i]);
+						}
+						$('#id_nombre').val(nombre);
+						$('#id_apellido').val(apellido);
+						$('#id_direccion').val(direccion);
+
+	    			}
+	    		});
+
+
+
+
+			}
+
+
+			function total(){
+				var cantidad;
+				var precio;
+				var total;
+				
+				
+	    		cantidad = $('#id_cantidad').val();
+	    		precio = $('#id_precio_unidad').val();
+	    		total =cantidad*precio;
+
+	    		$('#id_total_factura').val(total);
+	    		
+
+	    		
+
+
+			}
+
+
+			function precio(){
+				
+				var id;
+				
+	    		var id = $('#id_producto').val();
+
+	    		$.ajax({
+
+	    			data: {'id':id},
+	    			url: '/busqueda_producto',
+	    			type:'get',
+	    			success: function(data){
+	    				precio=''
+	    				existencia=''
+	    				descripcion=''
+	    				marca=''
+	    				html=''
+
+	    				
+	    				for (var i=0; i<data.length; i++){
+
+	    					//palabra+=data[i].fields.nombre_cliente;
+	    					//console.log(data[0].fields.nombre_cliente)
+	    				
+	    					precio+=data[i].fields.precio_unidad_producto;
+	    					existencia+=data[i].fields.existencia_producto;
+	    					descripcion+=data[i].fields.descripcion_producto;
+	    					marca+=data[i].fields.marca_producto;
+	    					
+
+	    					//console.log(data[i]);
+						}
+						$('#id_precio_unidad').val(precio);
+						$('#detalle_producto').html('<ul><li><label>Existencia</label>'+existencia+'</li><label>descripcion</label>'+descripcion+'</li><label>marca</label>'+marca+'</li></ul>')
+						
+
+	    			}
+	    		});
+
+			}
+
+			//$("#fila").click(function(){
+			$('#fila').on('click', fila);
+  				/*$("#detalle").append("<label>producto</label><input type='text' name='prodducto' ><label>cantidad</label><input type='text' name='cantidadd' ><label>precio</label><input type='text' name='precio' ></br>");*/
+			//});
+			function fila(){
+				console.log('llego')
+					var id=0;
+				$.ajax({
+
+					
+	    			data: {'id':id},
+	    			url: '/formulario',
+	    			type:'get',
+	    			success: function(data){
+	    				
+
+	    				
+	    				
+						$('#detalle_fac').append(data)
+						
+
+	    			}
+	    		});
+
+			}
+
+				//$.ajax({
+
+					//$('#new_fila').html("<imput type='text' name='prodducto' id='producto' />");
+				//})
+				
+				//$('#new_fila').append("<imput type='text' name='prodducto' id='producto' />")
+			//}
+
+
+
+
+		</script>
+		{% endblock %}
+
+

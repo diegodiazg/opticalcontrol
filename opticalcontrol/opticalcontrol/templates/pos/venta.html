@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titulo %} VENTA {% endblock %}
+
+{% block encabezado %}
+	<h1>REALIZAR VENTA</h1>
+{% endblock%}
+
+{% block contenido %}
+	<form class='seccion' id='formulario' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+		<fieldset>
+		<legend>Registro producto</legend>
+		{{factura.as_p}}
+		<p><input type='submit' value='Confirmar' class='btnAzul' /></p>
+	</fieldset>
+	</form>
+{% endblock %}
+

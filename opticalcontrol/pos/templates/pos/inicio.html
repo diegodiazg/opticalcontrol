@@ -1,0 +1,18 @@
+<header>
+	<nav>
+		<ul>
+			<li><a href='/'>Inicio</a></li>
+			<li><a href='/productos'>Productos</a></li>
+			<li><a href='/sobre'>Sobre</a></li>
+		</ul>
+	</nav>
+</header>
+<section>
+	<h1>Productos Optica</h1>
+	<p>Actualmente tenemos los siguientes productos</p>
+	<ul>
+		{% for dato in productos %}
+		<li>{{dato.nombre_producto}}</li>
+		{% endfor %}
+	</ul>
+</section>	
