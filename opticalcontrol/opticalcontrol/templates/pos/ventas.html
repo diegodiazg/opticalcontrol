@@ -41,12 +41,19 @@
 		<script type="text/javascript">
 
 		
-			$('#id_nit').on('keyup', cliente); // cuando se teclea en el campo id, llama a la fucion 
-			$('#id_cantidad').on('keyup', total);
+		
 
-			$('#id_producto').on('change', precio);
-			$('#id_producto').on('change', precio);
-			$('#id_producto').on('change', precio);
+
+				var $input = $( "input" );
+			console.log($input[1])
+			$('#id_nit').on('keyup', cliente); // cuando se teclea en el campo id, llama a la fucion 
+			$('#id_form-0-cantidad').on('keyup', total);
+			$('#id_form-1-cantidad').on('keyup', total);
+			$('#id_form-2-cantidad').on('keyup', total);
+			
+			$('#id_form-0-producto').on('change', precio);
+			$('#id_form-1-producto').on('change', precio1);
+			$('#id_form-2-producto').on('change', precio2);
 
 
 			//$('#fila').on('click', fila);
@@ -100,9 +107,19 @@
 				var total;
 				
 				
-	    		cantidad = $('#id_cantidad').val();
-	    		precio = $('#id_precio_unidad').val();
-	    		total =cantidad*precio;
+	    		cantidad1 = $('#id_form-0-cantidad').val();
+	    		precio1 = $('#id_form-0-precio_unidad').val();
+	    		total1 =cantidad1*precio1;
+
+				cantidad2 = $('#id_form-1-cantidad').val();
+	    		precio2 = $('#id_form-1-precio_unidad').val();
+	    		total2 =cantidad2*precio2;
+
+	    		cantidad3 = $('#id_form-2-cantidad').val();
+	    		precio3 = $('#id_form-2-precio_unidad').val();
+	    		total3 =cantidad3*precio3;
+
+	    		total=total1+total2+total3
 
 	    		$('#id_total_factura').val(total);
 	    		
@@ -117,8 +134,8 @@
 				
 				var id;
 				
-	    		var id = $('#id_producto').val();
-
+	    		var id = $('#id_form-0-producto').val();
+	    		
 	    		$.ajax({
 
 	    			data: {'id':id},
@@ -145,7 +162,7 @@
 
 	    					//console.log(data[i]);
 						}
-						$('#id_precio_unidad').val(precio);
+						$('#id_form-0-precio_unidad').val(precio);
 						$('#detalle_producto').html('<ul><li><label>Existencia</label>'+existencia+'</li><label>descripcion</label>'+descripcion+'</li><label>marca</label>'+marca+'</li></ul>')
 						
 
@@ -153,6 +170,92 @@
 	    		});
 
 			}
+
+
+
+			function precio1(){
+				
+				var id;
+				
+	    		var id = $('#id_form-1-producto').val();
+	    		
+	    		$.ajax({
+
+	    			data: {'id':id},
+	    			url: '/busqueda_producto',
+	    			type:'get',
+	    			success: function(data){
+	    				precio=''
+	    				existencia=''
+	    				descripcion=''
+	    				marca=''
+	    				html=''
+
+	    				
+	    				for (var i=0; i<data.length; i++){
+
+	    					//palabra+=data[i].fields.nombre_cliente;
+	    					//console.log(data[0].fields.nombre_cliente)
+	    				
+	    					precio+=data[i].fields.precio_unidad_producto;
+	    					existencia+=data[i].fields.existencia_producto;
+	    					descripcion+=data[i].fields.descripcion_producto;
+	    					marca+=data[i].fields.marca_producto;
+	    					
+
+	    					//console.log(data[i]);
+						}
+						$('#id_form-1-precio_unidad').val(precio);
+						$('#detalle_producto').html('<ul><li><label>Existencia</label>'+existencia+'</li><label>descripcion</label>'+descripcion+'</li><label>marca</label>'+marca+'</li></ul>')
+						
+
+	    			}
+	    		});
+
+			}
+
+
+			function precio2(){
+				
+				var id;
+				
+	    		var id = $('#id_form-2-producto').val();
+	    		
+	    		$.ajax({
+
+	    			data: {'id':id},
+	    			url: '/busqueda_producto',
+	    			type:'get',
+	    			success: function(data){
+	    				precio=''
+	    				existencia=''
+	    				descripcion=''
+	    				marca=''
+	    				html=''
+
+	    				
+	    				for (var i=0; i<data.length; i++){
+
+	    					//palabra+=data[i].fields.nombre_cliente;
+	    					//console.log(data[0].fields.nombre_cliente)
+	    				
+	    					precio+=data[i].fields.precio_unidad_producto;
+	    					existencia+=data[i].fields.existencia_producto;
+	    					descripcion+=data[i].fields.descripcion_producto;
+	    					marca+=data[i].fields.marca_producto;
+	    					
+
+	    					//console.log(data[i]);
+						}
+						$('#id_form-2-precio_unidad').val(precio);
+						$('#detalle_producto').html('<ul><li><label>Existencia</label>'+existencia+'</li><label>descripcion</label>'+descripcion+'</li><label>marca</label>'+marca+'</li></ul>')
+						
+
+	    			}
+	    		});
+
+			}
+
 
 			//$("#fila").click(function(){
 			$('#fila').on('click', fila);

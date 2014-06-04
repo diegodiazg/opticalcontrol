@@ -20,13 +20,10 @@ class FacturaForm(ModelForm):
 	nombre=forms.CharField()
 	apellido=forms.CharField()
 	direccion=forms.CharField()
-	cliente=forms.CharField(widget=forms.HiddenInput())
 	
-
-
 	class Meta:
 		model = factura_venta
-		fields=['serie_factura', 'no_factura',  'estado_factura','total_factura', 'cliente' ]
+		fields=['serie_factura', 'no_factura',  'estado_factura','total_factura' ]
 		
 
 

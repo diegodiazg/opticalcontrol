@@ -123,12 +123,17 @@ def cliente_nuevo(request):
 	return render_to_response('clienteform.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
 def ventas(request):
+	
 	if request.method=='POST':
 		factura = FacturaForm(request.POST, request.FILES)
 		detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+
 		
 		if factura.is_valid() and detallefactura.is_valid():
 			fac = factura.save(commit=False)
+			nit=request.POST['nit']
+			clien = cliente.objects.get(nit_cliente=nit)
+			fac.cliente=clien
 			fac.fecha_factura= datetime.now()
 			usur1 = request.user.id
 			vendedor_id=empleado.objects.get(usuario=usur1)
@@ -136,7 +141,7 @@ def ventas(request):
 			fac.save()
 	
 			detallefactura = detallefactura.save(commit=False)
-      		detallefactura.factura_venta = fac
+			detallefactura.factura_venta = fac
       		detallefactura.save()
 
       		prod_ids = detallefactura.producto.id
@@ -147,7 +152,7 @@ def ventas(request):
       			alerta = 'La transaccion fue exitosa' #mensaje de exitos
       			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de exito al fronend
       		else:
-      			alerta = 'La cantidad a Despachar no existen en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
+      			alerta = 'La cantidad a Despachar no esta en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
       			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de error de fracaso al fronend
 
 
@@ -155,7 +160,7 @@ def ventas(request):
 
 	else:
 		factura = FacturaForm()
-		formularioset = formset_factory(DetalleFacturaForm, extra=3)
+		formularioset = formset_factory(DetalleFacturaForm, extra=1)
 		detallefactura =formularioset()
 		return render_to_response('ventas.html', {'factura':factura, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
 
