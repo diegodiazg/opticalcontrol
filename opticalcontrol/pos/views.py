@@ -23,10 +23,7 @@ def formulario(request):
 		formularioset = formset_factory(DetalleFacturaForm, extra=3)
 		formulario =formularioset()
 		
-		#data =( {'producto': data.producto, 'cantidad': data.cantidad})
-		#data=serializers.serialize('json', data)
-      	
-      	#data = serializers.serialize('json', data)
+		
       	
 
       	#data = simplejson.dumps(data, ensure_ascii=False)
