@@ -22,13 +22,7 @@ def formulario(request):
 		
 		formularioset = formset_factory(DetalleFacturaForm, extra=3)
 		formulario =formularioset()
-		
-		
-      	
 
-      	#data = simplejson.dumps(data, ensure_ascii=False)
-	#return render_to_response(data, {'formulario':formulario}, context_instance=RequestContext(request))
-	#return HttpResponse( rdict)
 	return render_to_response(formulario)
 
 
