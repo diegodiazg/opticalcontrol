@@ -22,7 +22,16 @@ def formulario(request):
 		
 		formularioset = formset_factory(DetalleFacturaForm, extra=3)
 		formulario =formularioset()
+		
+		#data =( {'producto': data.producto, 'cantidad': data.cantidad})
+		#data=serializers.serialize('json', data)
+      	
+      	#data = serializers.serialize('json', data)
+      	
 
+      	#data = simplejson.dumps(data, ensure_ascii=False)
+	#return render_to_response(data, {'formulario':formulario}, context_instance=RequestContext(request))
+	#return HttpResponse( rdict)
 	return render_to_response(formulario)
 
 
@@ -143,7 +152,7 @@ def ventas(request):
       			alerta = 'La transaccion fue exitosa' #mensaje de exitos
       			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de exito al fronend
       		else:
-      			alerta = 'La cantidad a Despachar no esta en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
+      			alerta = 'La cantidad a Despachar no disponible en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
       			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de error de fracaso al fronend
 
 
@@ -151,7 +160,7 @@ def ventas(request):
 
 	else:
 		factura = FacturaForm()
-		formularioset = formset_factory(DetalleFacturaForm, extra=1)
+		formularioset = formset_factory(DetalleFacturaForm, extra=3)
 		detallefactura =formularioset()
 		return render_to_response('ventas.html', {'factura':factura, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
 
