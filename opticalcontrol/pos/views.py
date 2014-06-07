@@ -126,7 +126,10 @@ def ventas(request):
 	
 	if request.method=='POST':
 		factura = FacturaForm(request.POST, request.FILES)
-		detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+		formularioset = formset_factory(DetalleFacturaForm)
+		detallefactura =formularioset(request.POST, request.FILES)
+		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
 
 		
 		if factura.is_valid() and detallefactura.is_valid():
@@ -140,9 +143,15 @@ def ventas(request):
 			fac.vendedor=vendedor_id
 			fac.save()
 	
-			detallefactura = detallefactura.save(commit=False)
-			detallefactura.factura_venta = fac
-      		detallefactura.save()
+			 
+			#detallefactura = detallefactura.save(commit=False)
+
+			for obj in detallefactura:
+				obj.factura_venta = fac
+			    	obj.save()
+			#detallefactura.factura_venta = fac
+
+      		#detallefactura.save()
 
       		prod_ids = detallefactura.producto.id
       		cantidad1 =producto.objects.get(pk=prod_ids)
