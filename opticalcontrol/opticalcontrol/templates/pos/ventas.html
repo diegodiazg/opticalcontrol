@@ -45,7 +45,7 @@
 
 
 				var $input = $( "input" );
-			console.log($input[1])
+			
 			$('#id_nit').on('keyup', cliente); // cuando se teclea en el campo id, llama a la fucion 
 			$('#id_form-0-cantidad').on('keyup', total);
 			$('#id_form-1-cantidad').on('keyup', total);
@@ -256,40 +256,15 @@
 
 			}
 
-
-			//$("#fila").click(function(){
 			$('#fila').on('click', fila);
-  				/*$("#detalle").append("<label>producto</label><input type='text' name='prodducto' ><label>cantidad</label><input type='text' name='cantidadd' ><label>precio</label><input type='text' name='precio' ></br>");*/
-			//});
+  				
 			function fila(){
-				console.log('llego')
-					var id=0;
-				$.ajax({
-
-					
-	    			data: {'id':id},
-	    			url: '/formulario',
-	    			type:'get',
-	    			success: function(data){
-	    				
-
-	    				
-	    				
-						$('#detalle_fac').append(data)
-						
-
-	    			}
-	    		});
+				
+				$('#detalle_fac').append('poco');	
 
 			}
 
-				//$.ajax({
-
-					//$('#new_fila').html("<imput type='text' name='prodducto' id='producto' />");
-				//})
 				
-				//$('#new_fila').append("<imput type='text' name='prodducto' id='producto' />")
-			//}
 
 
 

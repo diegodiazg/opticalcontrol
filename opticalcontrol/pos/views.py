@@ -126,7 +126,7 @@ def ventas(request):
 	
 	if request.method=='POST':
 		factura = FacturaForm(request.POST, request.FILES)
-		formularioset = formset_factory(DetalleFacturaForm, extra=3)
+		formularioset = formset_factory(DetalleFacturaForm)
 		detallefactura =formularioset(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
@@ -145,6 +145,7 @@ def ventas(request):
 	
 			#cd = detallefactura.cleaned_data
 			#detallefactura = detallefactura.save(commit=False)
+
 			for obj in detallefactura:
 				obj2 = obj.save(commit=False)
 				obj2.factura_venta = fac
@@ -170,7 +171,8 @@ def ventas(request):
 
 	else:
 		factura = FacturaForm()
-		formularioset = formset_factory(DetalleFacturaForm, extra=3)
+		formsimple=DetalleFacturaForm()
+		formularioset = formset_factory(DetalleFacturaForm)
 		detallefactura =formularioset()
-		return render_to_response('ventas.html', {'factura':factura, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
+		return render_to_response('ventas.html', {'factura':factura,  'formsimple':formsimple, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
 
