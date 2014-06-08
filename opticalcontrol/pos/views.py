@@ -126,7 +126,7 @@ def ventas(request):
 	
 	if request.method=='POST':
 		factura = FacturaForm(request.POST, request.FILES)
-		formularioset = formset_factory(DetalleFacturaForm)
+		formularioset = formset_factory(DetalleFacturaForm, extra=3)
 		detallefactura =formularioset(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
@@ -143,26 +143,27 @@ def ventas(request):
 			fac.vendedor=vendedor_id
 			fac.save()
 	
-			 
+			#cd = detallefactura.cleaned_data
 			#detallefactura = detallefactura.save(commit=False)
-
 			for obj in detallefactura:
-				obj.factura_venta = fac
-			    	obj.save()
+				obj2 = obj.save(commit=False)
+				obj2.factura_venta = fac
+				obj2.save()
+				
 			#detallefactura.factura_venta = fac
 
       		#detallefactura.save()
 
-      		prod_ids = detallefactura.producto.id
-      		cantidad1 =producto.objects.get(pk=prod_ids)
-      		if cantidad1.existencia_producto >= detallefactura.cantidad: #validacion para descontar de inventario
-      			descuento_prod= cantidad1.existencia_producto-detallefactura.cantidad #se realiza el descuento
-      			menos =producto.objects.filter(pk=prod_ids).update(existencia_producto=descuento_prod) # se actualiza en la db el descuento
-      			alerta = 'La transaccion fue exitosa' #mensaje de exitos
-      			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de exito al fronend
-      		else:
-      			alerta = 'La cantidad a Despachar no disponible en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
-      			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de error de fracaso al fronend
+      		#prod_ids = obj2.producto.id
+      		#cantidad1 =producto.objects.get(pk=prod_ids)
+      		#if cantidad1.existencia_producto >= obj2.cantidad: #validacion para descontar de inventario
+      			#descuento_prod= cantidad1.existencia_producto-detallefactura.cantidad #se realiza el descuento
+      			#menos =producto.objects.filter(pk=prod_ids).update(existencia_producto=descuento_prod) # se actualiza en la db el descuento
+      			#alerta = 'La transaccion fue exitosa' #mensaje de exitos
+      			#return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de exito al fronend
+      		#else:
+      			#alerta = 'La cantidad a Despachar no disponible en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
+      			#return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de error de fracaso al fronend
 
 
 		return HttpResponseRedirect('/ventas') #se redirecciona a la misma pagina luego de realizar la operacion
