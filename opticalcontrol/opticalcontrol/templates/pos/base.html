@@ -14,12 +14,15 @@
 
 </head>
 <body>
+	<div><span class="badge pull-right" class=''><label>Bienvenido:</label> {{user.username}}
+				{% if user.is_authenticated %}
+    				<a href='/cerrar'>Cerrar Sesion</a></span></div>
+				{% endif %}
 	<header>
-		{% block encabezado %} {% endblock %}
-		<div><span class="badge pull-right" class=''><label>Bienvenido:</label> {{user.username}}
-			{% if user.is_authenticated %}
-    			<a href='/cerrar'>Cerrar Sesion</a></span></div>
-			{% endif %}
+		{% block encabezado %} 
+			
+		{% endblock %}
+		
 		
 
 		<nav class='navbar-inverse'>

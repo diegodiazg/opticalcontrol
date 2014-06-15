@@ -4,7 +4,7 @@
 {% block style_css %}
 <style> 
 	body {
-	background: #DCDDDF url(fondo.png);
+	background: #DCDDDF;
 	
 }
 </style>
@@ -15,7 +15,7 @@
 {% endblock%}
 
 {% block contenido %}
-	<formclass="form-horizontal" role="form" method ='post' action=''>{% csrf_token %}
+	<form class="form-horizontal" role="form" method ='post' action=''>{% csrf_token %}
 		<fieldset>
 			<legend>Registro factura</legend>
 				{{factura.as_p}}
@@ -25,7 +25,7 @@
 					
 				
 				</fieldset >
-					<input type='button' name='agregar' value='agregar' id='fila' ></br></br>
+				<input type='button' name='agregar' value='agregar' id='fila' ></br></br>
 			<p><input type='submit' value='Confirmar' /></p>
 		</fieldset>
 	</form>
@@ -266,15 +266,49 @@
 			}
 
 			$('#fila').on('click', fila);
-  				
+  				var element=1;
 			function fila(){
 				
 
-				$('#detalle_fac').append('<label>Producto</label><input type="text" name="producto" ><label>Cantidad</label><input type="text" name="producto" ><label>Precio Unidad</label><input type="text" name="producto" ></br>');	
+				//$('#detalle_fac').append('<label>Producto</label><input type="text" name="producto" ><label>Cantidad</label><input type="text" name="producto" ><label>Precio Unidad</label><input type="text" name="producto" ></br>');
+				var id="todos";
+				$('#id_form-TOTAL_FORMS').val(element+1);
+		
+				$.ajax({
+					
+	    			data: {'id':id},
+	    			url: '/busqueda_producto',
+	    			type:'get',
+	    			success: function(data){
+	    				var opciones='';
+	    				
+	    				
+	    				for (var i=0; i<data.length; i++){
+	    					opciones=opciones+'<option value='+data[i].fields.pk+'>'+data[i].fields.nombre_producto+'</option>'
+	    					}
+	    					//palabra+=data[i].fields.nombre_cliente;
+	    					//console.log(data[0].fields.nombre_cliente)
+	    				console.log(opciones)
+	    				$('#detalle_fac').append('<label>Producto</label><select id="id_form-'+element+'-producto" name="form-'+element+'-producto" ><option value="" selected="selected">---------</option>'+opciones+'</select><label>Cantidad</label><input id="id_form-'+element+'-cantidad" name="form-'+element+'-cantidad" type="number" ><label>Precio Unidad</label><input id="id_form-'+element+'-precio_unidad" name="form-'+element+'-precio_unidad" step="0.01" type="number" ></br>');
+	    				
 
+	    					//console.log(data[i]);
+	    					
+						}
+						
+
+	    			
+	    		});	
+				element=element+1;
+	    		
+	    		
 			}
+			
 
 				
+//<input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="1" />
+
+
 
 
 

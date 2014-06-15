@@ -26,5 +26,8 @@ urlpatterns = patterns('',
     url(r'^busqueda_cliente/$','pos.views.busqueda_cliente'),
     url(r'^busqueda_producto/$','pos.views.busqueda_producto'),
      url(r'^formulario/$','pos.views.formulario'),
+
+
+     
 )
 

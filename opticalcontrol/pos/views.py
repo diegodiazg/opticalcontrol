@@ -42,17 +42,15 @@ def busqueda_producto(request):
 	if request.method=='GET':
 		
 		id=request.GET['id']
-	
-		data = producto.objects.filter(pk=id)
+		if id == 2: 
+			data = producto.objects.filter(pk=id)
+				
 
-		#data = cliente.objects.all()
+		if id == 'todos':
+			data = producto.objects.all()
+				
 
-
-
-		#dic= {'datos': data.nombre_cliente}
-		#print data.pk
-		#print dic.datos
-		data=serializers.serialize('json', data, fields=('precio_unidad_producto', 'existencia_producto', 'descripcion_producto',' marca_producto'))
+		data=serializers.serialize('json', data, fields=('pk','nombre_producto','precio_unidad_producto', 'existencia_producto', 'descripcion_producto',' marca_producto'))
 
 		#print data[].nombre_cliente
 		#return HttpResponse({'data':data})
@@ -125,6 +123,7 @@ def cliente_nuevo(request):
 def ventas(request):
 	
 	if request.method=='POST':
+
 		factura = FacturaForm(request.POST, request.FILES)
 		formularioset = formset_factory(DetalleFacturaForm)
 		detallefactura =formularioset(request.POST, request.FILES)
@@ -133,6 +132,7 @@ def ventas(request):
 
 		
 		if factura.is_valid() and detallefactura.is_valid():
+			print 'llego'
 			fac = factura.save(commit=False)
 			nit=request.POST['nit']
 			clien = cliente.objects.get(nit_cliente=nit)
