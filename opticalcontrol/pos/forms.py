@@ -16,7 +16,7 @@ class ClienteForm(ModelForm):
 		model = cliente
 
 class FacturaForm(ModelForm):
-	nit=forms.CharField()
+	nit=forms.CharField(label="NIT")
 	nombre=forms.CharField()
 	apellido=forms.CharField()
 	direccion=forms.CharField()
