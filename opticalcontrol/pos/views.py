@@ -128,12 +128,11 @@ def ventas(request):
 		formularioset = formset_factory(DetalleFacturaForm)
 		detallefactura =formularioset(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+
 		
-		#factur=request.POST['form-TOTAL_FORMS']
-		
-	
 		if factura.is_valid() and detallefactura.is_valid():
-			
+			print 'llego'
 			fac = factura.save(commit=False)
 			nit=request.POST['nit']
 			clien = cliente.objects.get(nit_cliente=nit)
@@ -166,10 +165,6 @@ def ventas(request):
       		#else:
       			#alerta = 'La cantidad a Despachar no disponible en existencia!!' #se envia mensaje de error de no existir la cantidad necesaria en inventario
       			#return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de error de fracaso al fronend
-      		else:
-      			alerta = 'La cantidad a Despachar no disponible en existencia!!'
-      			return render_to_response('ventas.html', {'alerta':alerta}, context_instance=RequestContext(request)) #se envia el mensaje de exito al fronend
-
 
 
 		return HttpResponseRedirect('/ventas') #se redirecciona a la misma pagina luego de realizar la operacion
@@ -177,7 +172,7 @@ def ventas(request):
 	else:
 		factura = FacturaForm()
 		formsimple=DetalleFacturaForm()
-		formularioset = formset_factory(DetalleFacturaForm, extra=3)
+		formularioset = formset_factory(DetalleFacturaForm)
 		detallefactura =formularioset()
 		return render_to_response('ventas.html', {'factura':factura,  'formsimple':formsimple, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
 
