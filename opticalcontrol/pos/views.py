@@ -125,14 +125,14 @@ def ventas(request):
 	if request.method=='POST':
 
 		factura = FacturaForm(request.POST, request.FILES)
-		formularioset = formset_factory(DetalleFacturaForm)
-		detallefactura =formularioset(request.POST, request.FILES)
-		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
+		#formularioset = formset_factory(DetalleFacturaForm)
+		#detallefactura =formularioset(request.POST, request.FILES)
+		detallefactura = DetalleFacturaForm(request.POST, request.FILES)
 		#detallefactura = DetalleFacturaForm(request.POST, request.FILES)
 
 		
 		if factura.is_valid() and detallefactura.is_valid():
-			print 'llego'
+		
 			fac = factura.save(commit=False)
 			nit=request.POST['nit']
 			clien = cliente.objects.get(nit_cliente=nit)
@@ -144,16 +144,16 @@ def ventas(request):
 			fac.save()
 	
 			#cd = detallefactura.cleaned_data
-			#detallefactura = detallefactura.save(commit=False)
+			detallefactura = detallefactura.save(commit=False)
 
-			for obj in detallefactura:
-				obj2 = obj.save(commit=False)
-				obj2.factura_venta = fac
-				obj2.save()
+			#for obj in detallefactura:
+				#obj2 = obj.save(commit=False)
+				#obj2.factura_venta = fac
+				#obj2.save()
 				
-			#detallefactura.factura_venta = fac
+			detallefactura.factura_venta = fac
 
-      		#detallefactura.save()
+      		detallefactura.save()
 
       		#prod_ids = obj2.producto.id
       		#cantidad1 =producto.objects.get(pk=prod_ids)
@@ -171,8 +171,8 @@ def ventas(request):
 
 	else:
 		factura = FacturaForm()
-		formsimple=DetalleFacturaForm()
-		formularioset = formset_factory(DetalleFacturaForm)
-		detallefactura =formularioset()
-		return render_to_response('ventas.html', {'factura':factura,  'formsimple':formsimple, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
+		#formularioset = formset_factory(DetalleFacturaForm)
+		#detallefactura =formularioset()
+		detallefactura =DetalleFacturaForm()
+		return render_to_response('ventas.html', {'factura':factura, 'detallefactura':detallefactura}, context_instance=RequestContext(request))
 

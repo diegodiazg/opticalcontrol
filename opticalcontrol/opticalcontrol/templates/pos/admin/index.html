@@ -1,0 +1,57 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+ <div class="container">
+{% if app_list %} 
+    {% for app in app_list %}
+      
+
+            
+                     {% for model in app.models %}
+            <div class="row">
+                
+                <div class="col-xs-12 .col-sm-6 .col-md-8">
+                    <div class="thumbnail">
+                        <div class="capcion">
+                        {% if model.admin_url %}
+                            <h3><a href="{{ model.admin_url }}">{{ model.name }}</a></h3>
+                        {% else %}
+                            <h3 >{{ model.name }}</h3>
+                        {% endif %}
+
+                        {% if model.add_url %}
+                        <p><a class="btn btn-primary" role="button" href="{{ model.add_url }}" class="addlink">{% trans 'Agregar' %}</a>
+                        {% else %}
+                        
+                        {% endif %}
+
+                        {% if model.admin_url %}
+                        <a class="btn btn-default" role="button" href="{{ model.admin_url }}" class="changelink">{% trans 'Modificar' %}</a></p>
+                        {% else %}
+                     
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    {% endfor %}
+                    
+     
+
+           {% endfor %}
+{% else %}
+    <p>{% trans "No tienes permisos para Modificar." %}</p>
+{% endif %}
+{% endblock %}
+ 
+
